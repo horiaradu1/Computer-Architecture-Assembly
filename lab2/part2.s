@@ -13,11 +13,14 @@ next				; while (true) { //The { is just to ease readability, python does not us
 
 	; if R0 == 10 do: // translate to ARM code
 
+	CMP R0, #10
+	BNE loop
+
 	ADR	R0, goodbye 	;   printf(" and good-bye!")
 	SVC	3
 	SVC  	2		;   stop the program
 
 	; done // translate to ARM code
 
-	SVC	0		; output the character in R0
+loop	SVC	0		; output the character in R0
 	B	next		; } //while

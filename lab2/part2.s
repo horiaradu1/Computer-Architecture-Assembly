@@ -14,7 +14,7 @@ next				; while (true) { //The { is just to ease readability, python does not us
 	; if R0 == 10 do: // translate to ARM code
 
 	CMP R0, #10
-	BNE loop
+	BNE cond
 
 	ADR	R0, goodbye 	;   printf(" and good-bye!")
 	SVC	3
@@ -22,5 +22,5 @@ next				; while (true) { //The { is just to ease readability, python does not us
 
 	; done // translate to ARM code
 
-loop	SVC	0		; output the character in R0
+cond	SVC	0		; output the character in R0
 	B	next		; } //while

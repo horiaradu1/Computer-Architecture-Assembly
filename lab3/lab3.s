@@ -1,4 +1,4 @@
-	B part1 ; part1 or part2 or part3
+	B part3 ; part1 or part2 or part3
 
 buffer	DEFS 100,0
 
@@ -23,8 +23,10 @@ s9	DEFB "twenty\0"
 
 ;************************** part 1 **************************
 printstring
-	MOV  R0,R1	; given
-	SVC  3		; given
+loop1	LDRB  R0, [R1], #1
+	CMP  R0, #0
+	SVCNE 0
+	BNE  loop1
 ; your code goes here, replacing the previous 2 lines
 	MOV  R0, #10	; given - output end-of-line
 	SVC  0		; given
@@ -32,16 +34,35 @@ printstring
 
 ;************************** part 2 ***************************
 strcat
-; your code goes here
+loop3	LDRB R0, [R1,#1]!
+	CMP R0, #0
+	BNE loop3
+loop4	LDRB  R0, [R2], #1
+	STRB  R0, [R1], #1
+	CMP R0, #0
+	BNE loop4
 	MOV  PC, LR
 
 strcpy
-; your code goes here
+loop2	LDRB  R0, [R2], #1
+	STRB  R0, [R1], #1
+	CMP R0, #0
+	BNE loop2	
 	MOV  PC, LR
 
 ;************************** part 3 **************************
 sorted	STR LR, return2	; given
-; your code goes here
+loop5	LDRB R4, [R2], #1
+	LDRB R5, [R3], #1
+	CMP R4, R5
+	BNE stop
+	CMP R4, #0
+	BEQ stop
+	CMP R5, #0
+	BEQ stop
+	B loop5
+stop    
+	CMP R4, R5
 	LDR  PC, return2 ; given
 return2 DEFW 0		; given
 

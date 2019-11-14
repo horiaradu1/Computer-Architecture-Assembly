@@ -54,13 +54,12 @@ loop2	LDRB  R0, [R2], #1
 sorted	STR LR, return2	; given
 loop5	LDRB R4, [R2], #1
 	LDRB R5, [R3], #1
-	CMP R4, R5
-	BNE stop
 	CMP R4, #0
 	BEQ stop
 	CMP R5, #0
 	BEQ stop
-	B loop5
+	CMP R4, R5
+	BEQ loop5
 stop    
 	CMP R4, R5
 	LDR  PC, return2 ; given
